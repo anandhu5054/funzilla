@@ -1,0 +1,168 @@
+{% load static %}
+
+
+<!--== Header Area Start ==-->
+<header style="background-color: #FFE6F7;" id="header-area" class="header__3">
+    <div class="ruby-container">
+        <div class="row">
+            <!-- Logo Area Start -->
+            <div class="col-3 col-lg-1 col-xl-2 m-auto">
+                <a href="{% url 'home'%}" class="logo-area">
+                    <img style="max-height: 50px;" src="{% static 'img/funzilla-logo3.png' %}" alt="Logo" class="img-fluid"/>
+                </a>
+            </div>
+            <!-- Logo Area End -->
+
+            <!-- Navigation Area Start -->
+            <div class="col-3 col-lg-9 col-xl-8 m-auto">
+                <div class="main-menu-wrap">
+                    <nav  id="mainmenu">
+                        <ul >
+                            <li  ><a style="font-size: 16px;" href="{% url 'home'%}">Home</a>
+                            </li>
+                            
+                            <li class="dropdown-show"><a style="font-size: 16px;" href="{% url 'store'%}">Shop</a>
+                                <ul class="mega-menu-wrap dropdown-nav">
+                                    {% for i in links%}
+                                    <li class="mega-menu-item"><a href="{{i.get_url}}"
+                                                                  class="mega-item-title">{{i.category_name}}</a>
+                                        <ul>
+                                            {% for j in i.children.all %}
+                                                <li><a href="{{j.get_url}}">{{j.category_name}}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="dropdown-show"><a style="font-size: 16px; pointer-events: none;"  href="{{age.get_url}}">Age</a>
+                                <ul class="dropdown-nav">
+                                    {% for i in age_link%}
+                                    <li><a href="{{i.get_url}}">{{i.age_name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="dropdown-show"><a style="font-size: 16px;pointer-events: none;" href="#">Brand</a>
+                                <ul class="dropdown-nav">
+                                    {% for i in brand_link%}
+                                    <li><a href="{{i.get_url}}">{{i.brand_name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="dropdown-show"><a style="font-size: 16px; pointer-events: none;" href="#">Charectors</a>
+                                <ul class="dropdown-nav">
+                                    {% for i in charector_link %}
+                                    <li><a href="{{i.get_url}}">{{i.charector_name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        
+                            <!-- <li><a style="font-size: 20px;" href="contact.html">Contact Us</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- Navigation Area End -->
+
+            <!-- Header Right Meta Start -->
+            <div class="col-6 col-lg-2 m-auto">
+                <div class="header-right-meta text-right">
+                    <ul>
+                        <li><a  href="" class="modal-active"><i class="fa fa-search"></i></a></li>
+                        {% if user.is_authenticated %}
+                        <li class="settings"><a href="#"><i class="fa fa-user"></i></a>
+                            <div class="site-settings d-block d-sm-flex">
+                                <dl class="my-account">                                     
+                                    <dt>Welcome back, {{user.first_name}}</dt>
+                                    <dd><a href="{% url 'dashboard' %}">Dashboard</a></dd>
+                                    <dd><a href="{% url 'signout' %}">SignOut</a></dd>                                    
+                                </dl>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="settings"><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i></a>
+                        {% endif %}
+                        <li class="shop-cart"><a href="{% url 'wishlist' %}"><i class="fa fa-heart"></i> 
+                            </a>
+                        </li>
+                        <li class="shop-cart"><a href="{% url 'cart' %}"><i class="fa fa-shopping-bag"></i> <span
+                                class="count">{{cart_count}}</span></a>
+                            <!-- <div class="mini-cart">
+                                <div class="mini-cart-body">
+                                    <div class="single-cart-item d-flex">
+                                        <figure class="product-thumb">
+                                            <a href="#"><img class="img-fluid" src="assets/img/product-1.jpg"
+                                                             alt="Products"/></a>
+                                        </figure>
+
+                                        <div class="product-details">
+                                            <h2><a href="#">Sprite Yoga Companion</a></h2>
+                                            <div class="cal d-flex align-items-center">
+                                                <span class="quantity">3</span>
+                                                <span class="multiplication">X</span>
+                                                <span class="price">$77.00</span>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="remove-icon"><i class="fa fa-trash-o"></i></a>
+                                    </div>
+                                    <div class="single-cart-item d-flex">
+                                        <figure class="product-thumb">
+                                            <a href="#"><img class="img-fluid" src="assets/img/product-2.jpg"
+                                                             alt="Products"/></a>
+                                        </figure>
+                                        <div class="product-details">
+                                            <h2><a href="#">Yoga Companion Kit</a></h2>
+                                            <div class="cal d-flex align-items-center">
+                                                <span class="quantity">2</span>
+                                                <span class="multiplication">X</span>
+                                                <span class="price">$6.00</span>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="remove-icon"><i class="fa fa-trash-o"></i></a>
+                                    </div>
+                                    <div class="single-cart-item d-flex">
+                                        <figure class="product-thumb">
+                                            <a href="#"><img class="img-fluid" src="assets/img/product-3.jpg"
+                                                             alt="Products"/></a>
+                                        </figure>
+                                        <div class="product-details">
+                                            <h2><a href="#">Sprite Yoga Companion Kit</a></h2>
+                                            <div class="cal d-flex align-items-center">
+                                                <span class="quantity">1</span>
+                                                <span class="multiplication">X</span>
+                                                <span class="price">$116.00</span>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="remove-icon"><i class="fa fa-trash-o"></i></a>
+                                    </div>
+                                </div>
+                                <div class="mini-cart-footer">
+                                    <a href="checkout.html" class="btn-add-to-cart">Checkout</a>
+                                </div>
+                            </div> -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Header Right Meta End -->
+        </div>
+    </div>
+</header>
+<!--== Header Area End ==-->
+
+
+<!--== Search Box Area Start ==-->
+<div class="body-popup-modal-area">
+    <span class="modal-close"><img src="{% static 'img/cancel.png' %}" alt="Close" class="img-fluid"/></span>
+    <div class="modal-container d-flex">
+        <div class="search-box-area">
+            <div class="search-box-form">
+                <form action="{% url 'search' %}"  method="GET">
+                    <input type="search" name="keyword" placeholder="type keyword and hit enter"/>
+                    <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Search Box Area End ==-->

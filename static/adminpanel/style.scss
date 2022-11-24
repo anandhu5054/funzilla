@@ -1,0 +1,468 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
+
+$primary: #0039c6;
+$primary-light: #0d43c9;
+$primary-lighter: #2c5bd0;
+$text-light: #a7bbeb; //#86a1e4;
+$text-on-primary: #fff;
+
+$sidenav-width: 16rem;
+$sidenav-gutter: 1.5rem;
+$icon-width: 2.5rem;
+$icon-size: 1.25rem;
+$radius: 1rem;
+$radius-sm: .5rem;
+$timing: ease-out;
+$duration: 250ms;
+
+@mixin sidenav-button {
+	display: inline-flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	padding: 0;
+	background: none;
+	color: $text-light;
+	border: 0;
+	overflow: hidden;
+	border-radius: $radius-sm;
+	cursor: pointer;
+	outline-offset: -2px;
+	transition-property: background, color;
+	transition-duration: $duration;
+	
+	.is-active & {
+		color: #fff;
+	}
+	
+	&:focus-visible {
+		outline: 2px solid $primary-lighter;
+	}
+	
+	&:focus-visible,
+	&:hover {
+		background: $primary-light;
+		color: #fff;
+	}
+}
+
+@mixin icon {
+	height: $icon-width;
+	width: $icon-width;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	
+	& .fa {
+		aspect-ratio: 1;
+		font-size: $icon-size;
+	}
+}
+
+@mixin label {
+	display: inline-block;
+	flex: 1;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition-property: opacity, transform;
+	transition-duration: $duration;
+	transition-timing-function: ease-out;
+	transition-delay: 100ms;
+	
+	.is-collapsed & {
+		opacity: 0;
+		transform: translateX(1rem);
+		transition-delay: 0s;
+	}
+}
+
+/**
+ * Resets
+ */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+img {
+	display: block;
+	max-height: 100%;
+	max-width: 100%;
+	margin: 0;
+	height: auto;
+	vertical-align: top;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p {
+	margin: 0 0 1em;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/**
+ * Styles
+ */
+
+body {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	overflow-x: hidden;
+	padding: 1rem;
+	background: #cad5e8;
+	font-family: 'Lato', 'Arial', sans-serif;
+	color: #212121;
+}
+
+.app {
+	display: flex;
+	flex-flow: row nowrap;
+	resize: both;
+	overflow: hidden;
+	background: #fff;
+	border-radius: $radius;
+	width: 500px;
+	max-width: 100%;
+	min-width: $sidenav-width;
+	box-shadow: rgba(#000, 0.1) 0 7px 29px 0;
+}
+
+.content {
+	flex: 1;
+	border-radius: $radius;
+}
+
+.sidenav {
+	display: flex;
+	flex-flow: column nowrap;
+	background: $primary;
+	color: #fff;
+	padding: $sidenav-gutter;
+	border-radius: $radius;
+	flex: 0 1 auto;
+	width: $sidenav-width;
+	max-width: 100%;
+	transition: width $duration $timing;
+	
+	&.is-collapsed {
+		width: $icon-width + ($sidenav-gutter * 2);
+	}
+}
+
+.sidenav__header {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	position: relative;
+}
+
+.header__icon {
+	@include icon;
+	
+	.fa {
+		font-size: 1.75rem;
+	}
+}
+
+.header__text {
+	@include label;
+	font-weight: 700;
+	flex: 1;
+}
+
+.sidenav__button {
+	@include sidenav-button;
+	color: #fff;
+	flex: 0 0 auto;
+	position: absolute;
+	left: 100%;
+}
+
+.sidenav__button-icon {
+	@include icon;
+}
+
+.sidenav__button-text {
+	@include label;
+	font-weight: 700;
+	flex: 1;
+}
+
+.header .sidenav__button-icon {
+	width: auto;
+	color: $text-light;
+}
+
+.header .sidenav__button-icon > * {
+	transition-property: transform, color;
+	transition-duration: $duration;
+	
+	&:hover {
+		color: $text-on-primary;
+	}
+	
+	.is-collapsed & {
+		transform: rotate(180deg);
+	}
+}
+
+.search {
+	display: flex;
+	flex-flow: row nowrap;
+	position: relative;
+	margin-top: 1rem;
+}
+
+.search__icon {
+	@include icon;
+	position: absolute;
+	right: 0;
+	top: 0;
+	cursor: pointer;
+}
+
+.search__input {
+	flex: 1 1 auto;
+	min-width: 1px;
+	height: $icon-width;
+	border: none;
+	background: $primary-light;
+	border-radius: $radius-sm;
+	color: $text-on-primary;
+	padding: 0 $icon-width 0 1rem;
+	outline-offset: -2px;
+	transition-property: background, color, padding;
+	transition-duration: $duration;
+	
+	&:placeholder {
+		color: $text-light;
+		transition-property: color;
+		transition-duration: $duration;
+	}
+	
+	&:focus {
+		outline: 2px solid rgba(#fff, .3);
+	}
+	
+	.is-collapsed & {
+		color: transparent;
+		padding-left: 0;
+		
+		&:not(:hover) {
+			background: none;
+		}
+		
+		&:placeholder {
+			color: transparent;
+		}
+	}
+}
+
+.sidenav__nav {
+	$offset: $sidenav-gutter - .125rem;
+	flex: 1 1 auto;
+	margin: 1rem ($offset * -1) 0;
+	padding: 0 $offset;
+}
+
+.nav {
+	$scroll-track: $primary-lighter;
+	$scroll-thumb: $text-light;
+	overflow: hidden;
+	overflow-y: auto;
+	
+	@media (pointer: fine) {
+		scrollbar-color: $scroll-thumb transparent;
+		scrollbar-width: thin;
+		transition: scrollbar-color 200ms;
+		
+		&::-webkit-scrollbar {
+			height: 8px;
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+			transition: background 200ms;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: $scroll-thumb;
+		}
+
+		&::-webkit-scrollbar-corner{
+			background: none;
+		}
+
+		&:hover {
+			scrollbar-color: $scroll-thumb $scroll-track;
+
+			&::-webkit-scrollbar-track {
+				background: $scroll-track;
+			}
+		}
+	}
+}
+
+.nav__list {
+	display: flex;
+	flex-flow: column nowrap;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	min-width: $icon-width;
+}
+
+.nav__divider {
+	margin: 1rem 0;
+	padding: 0 ($icon-width - $icon-size) / 2;
+	min-width: $icon-width;
+	
+	&::before {
+		display: block;
+		content: '';
+		height: .99px;
+		background: $primary-lighter;
+	}
+}
+
+.nav__item {
+	position: relative;
+	
+	& + & {
+		margin-top: .25rem;
+	}
+}
+
+.nav__button {
+	@include sidenav-button;
+	max-width: 100%;
+	width: 100%;
+}
+
+.nav__icon {
+	@include icon;
+}
+
+.nav__label {
+	@include label;
+	margin-right: 2.35rem;
+}
+
+.nav__badge {
+	border-radius: 50vh;
+	background: #bafd5c;
+	color: #000;
+	font-size: .75rem;
+	padding: .125rem .25rem;
+	pointer-events: none;
+	position: absolute;
+	z-index: 1;
+	right: 0;
+	top: 50%;
+	transform: translate(-.25rem, -50%);
+	transition-property: transform, font-size, padding, color;
+	transition-duration: $duration;
+	transition-timing-function: $timing;
+	
+	&.warn {
+		background: #ffbc00;
+	}
+	
+	.is-collapsed & {
+		transform: translate(-.25rem, 50%);
+		color: transparent;
+		font-size: 0;
+		padding: .25rem;
+	}
+}
+
+.sidenav__footer {
+	margin-top: 1rem;
+}
+
+.user__button {
+	@include sidenav-button;
+	border-radius: 50vh;
+	width: 100%;
+	max-width: 100%;
+	color: $text-on-primary;
+}
+
+.user__badge {
+	flex: 0 0 auto;
+	width: $icon-width;
+	height: $icon-width;
+	padding: 2px;
+}
+
+.user__image {
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	background: #CFD8DC;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	.fa {
+		color: #263238;
+		font-size: 1.5rem;
+	}
+}
+
+.user__text {
+	@include label;
+	margin-left: .5rem;
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.user__name,
+.user__title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.user__title {
+	font-size: .75rem;
+	color: $text-light;
+}

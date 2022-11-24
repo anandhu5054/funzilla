@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<!--== Page Title Area Start ==-->
+<div id="page-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-title-content">
+                    <h1>Wishlist</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop-left-full-wide.html">Shop</a></li>
+                        <li><a href="#" class="active">Wishlist</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Page Title Area End ==-->
+
+<!-- If cart is empty -->
+{% if not cart_items %}
+
+<div class="container-fluid  mt-100">
+    <div class="row">    
+        <div class="col-md-12">       
+            <div class="card">           
+                <div class="card-body cart">
+                   <div class="col-sm-12 empty-cart-cls text-center">
+                       <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                       <h3><strong>Your Wishlist is Empty</strong></h3>
+                       <h4>Add something to make me happy :)</h4>
+                       <a href="{% url 'store' %}"  class="btn btn-primary cart-btn-transform btn-lg m-3" >continue shopping</a>        
+                   </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>
+
+<!-- If cart has items -->
+{% else %}
+
+<!--== Page Content Wrapper Start ==-->
+<div id="page-content-wrapper" class="p-9">
+    <div class="container">
+        <!-- Wishlist Page Content Start -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Wishlist Table Area -->
+                <div class="cart-table table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="pro-thumbnail">Thumbnail</th>
+                            <th class="pro-title">Product</th>
+                            <th class="pro-price">Price</th>
+                            <th class="pro-quantity">Stock Status</th>
+                            <th class="pro-subtotal">Add to Cart</th>
+                            <th class="pro-remove">Remove</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in wishlist_items %}
+                        <tr>
+                            <td class="pro-thumbnail"><a href="{{item.product.get_url}}"><img class="img-fluid" src="{{item.product.images.url}}"
+                                                                       alt="Product"/></a></td>
+                            <td class="pro-title"><a href="{{item.product.get_url}}">{{item.product.product_name}}</a></td>
+                            <td class="pro-price"><span>${{item.product.discounted_price}}</span></td>
+                            {% if item.product.stock > 1 %}
+                            <td class="pro-quantity"><span class="text-success">In Stock</span></td>
+                            {% else %}
+                            <td class="pro-quantity"><span class="text-danger">Out of stock</span></td>
+                            {% endif %}
+                            <td class="pro-subtotal"><a href="{% url 'add_cart' item.product.id%}" class="btn-add-to-cart">Add to Cart</a></td>
+                            <td class="pro-remove"><a href="{% url 'remove_wishlist_item' item.product.id%}"><i class="fa fa-trash-o"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Wishlist Page Content End -->
+    </div>
+</div>
+<!--== Page Content Wrapper End ==-->
+{% endif %}
+
+{% endblock %}
+

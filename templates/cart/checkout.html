@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+
+<!--== Page Title Area Start ==-->
+<div id="page-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-title-content">
+                    <h1>Checkout</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop-left-full-wide.html">Shop</a></li>
+                        <li><a href="#" class="active">Checkout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Page Title Area End ==-->
+
+<!--== Page Content Wrapper Start ==-->
+<div id="page-content-wrapper" class="p-9">
+    <div class="container">
+     
+
+        
+            <div class="row">                
+                    <!-- Checkout Billing Details -->
+                    <div class="col-lg-6">
+                       
+                        
+                        <div class="checkout-billing-details-wrap">
+                            <h2>Billing Details</h2>
+                            <form action="{% url 'place_order' %}" method="POST">
+                                {% csrf_token %}
+                            <div class="billing-form-wrap">
+                                    <div class="checkout-box-wrap">
+
+
+                                        {% for adres in addresses %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="address"  value="{{adres.id}}" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                <address>
+                                                    <p><strong>{{adres.full_name}}</strong></p>
+                                                    <p>{{adres.address_line_1}} <br>
+                                                       {{adres.city}}, {{adres.state}} {{adres.postcode}}</p>
+                                                    <p>Mobile: {{adres.phone}}</p>
+                                                </address>
+                                            </label>
+                                          </div>
+                                        {% endfor %}
+
+
+                                        <div class="single-input-item">
+                                            <div class="custom-control custom-checkbox">
+                                                <a href="{% url 'add_address' %}">Ship to a different
+                                                    address?</a>
+                                            </div>
+                                        </div>                                      
+                                    </div>
+
+                                   
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary Details -->
+                    <div class="col-lg-6 mt-5 mt-lg-0">
+                        <div class="order-summary-details">
+                            <h2>Your Order Summary</h2>
+                            <div class="order-summary-content">
+                                <!-- Order Summary Table -->
+                                <div class="order-summary-table table-responsive text-center">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for cart_item in cart_items%}
+                                            <tr>
+                                                <td><a href="single-product.html">{{cart_item.product.product_name}}<strong> × {{cart_item.quantity}}</strong></a>
+                                                    <span>
+                                                        <p class="text-muted small">
+                                                            {% if cart_item.variations.all %}
+                                                                {% for item in cart_item.variations.all %}
+                                                                    {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </p>
+                                                    </span>
+                                                </td>
+                                                <td>₹{{cart_item.sub_total}}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td>Sub Total</td>
+                                            <td><strong>₹{{total}}</strong></td>
+                                        </tr>
+
+                                        {% if 'coupon_discount' in request.session %}
+                                        <tr>
+                                            <td>Coupon Savings</td>
+                                            <td >₹{{coupon_discount}}</td>
+                                        </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <td>Total Amount</td>
+                                            <td><strong>₹{{grand_total}}</strong></td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                                <!-- Order Payment Method -->
+                                <div class="order-payment-method">
+                                    <!-- <div class="single-payment-method show">
+                                        <div class="payment-method-name">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="cashon" name="paymentmethod" value="cash"
+                                                    class="custom-control-input" checked/>
+                                                <label class="custom-control-label" for="cashon">Cash On Delivery</label>
+                                            </div>
+                                        </div>
+                                        <div class="payment-method-details" data-method="cash">
+                                            <p>Pay with cash upon delivery.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="single-payment-method">
+                                        <div class="payment-method-name">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="paypalpayment" name="paymentmethod" value="paypal"
+                                                    class="custom-control-input"/>
+                                                <label class="custom-control-label" for="paypalpayment">Paypal <img
+                                                        src="assets/img/paypal-card.jpg" class="img-fluid paypal-card"
+                                                        alt="Paypal"/></label>
+                                            </div>
+                                        </div>
+                                        <div class="payment-method-details" data-method="paypal">
+                                            <p>Pay via PayPal; you can pay with your credit card if you dont have a PayPal
+                                                account.</p>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="summary-footer-area">
+                                       
+                                        <button type="submit"  class="btn-add-to-cart" >Place Order</button>
+                                </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+            <!--== Checkout Page Content End ==-->
+       
+    </div>
+</div>
+<!--== Page Content Wrapper End ==-->
+
+
+
+
+{% endblock %}

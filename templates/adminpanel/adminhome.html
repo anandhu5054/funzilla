@@ -1,0 +1,220 @@
+{% extends 'adminpanel/adminbaser.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <h3 class="text-primary">Funzilla</h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">Admin</h6>
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a href="{% url 'adminhome' %}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>                
+                <a href="{% url 'usersmanagement' %}" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Users</a>
+                <a href="{% url 'productmanagement' %}" class="nav-item nav-link"><i class="fa fa-warehouse me-2"></i>Products</a>
+                <a href="{% url 'categories' %}" class="nav-item nav-link"><i class="fa fa-object-group me-2"></i>categories</a>  
+                <a href="{% url 'ordermanagement' %}" class="nav-item nav-link"><i class="fa fa-list me-2"></i>Orders</a>
+                <a href="{% url 'coupon_offer' %}" class="nav-item nav-link"><i class="fa fa-gift me-2"></i>Coupons & Offers</a> 
+                            
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+        
+            <div class="navbar-nav align-items-center ms-auto">
+            
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <span class="d-none d-lg-inline-flex">Admin</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="{% url 'adminlogout' %}" class="dropdown-item">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+
+
+        <!-- Sale & Revenue Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-user fa-3x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Users</p>
+                            <h6 class="mb-0">{{users}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-gamepad fa-3x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Products</p>
+                            <h6 class="mb-0">{{products}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Sales</p>
+                            <h6 class="mb-0">{{sales}} Units</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-area fa-3x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2">Total Revenue</p>
+                            <h6 class="mb-0">${{profit}}</h6>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- Sale & Revenue End -->
+
+        <div  style="margin-top:25p ;" class="col-sm-12 col-xl-12 container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+                <h3 class="mb-4">Sales Report</h3>
+                <div class="m-n2">
+                    <a href="{% url 'sales_report' %}"><button type="button" class="btn btn-sm btn-primary m-2">Download (pdf)</button></a>
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Sales Chart Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4" style="display: flex; justify-content: center;">
+            
+                <div class="col-sm-12 col-xl-6" style="width: 100%;">
+                    <div class="bg-light text-center rounded p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-0">Orders</h6>
+                            <a href="">Show All</a>
+                        </div>
+                        <canvas style="transform: scale(0.6); margin-top: -15% ;" id="pie-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sales Chart End -->
+
+
+<!-- 
+        <div id="container" style="width: 75%;">
+            <canvas id="pie-chart"></canvas>
+          </div>
+         -->
+          <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+          <script>
+        
+            var config = {
+              type: 'pie',
+              data: {
+                datasets: [{
+                  data: {{ data|safe }},
+                  backgroundColor: [
+                    '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
+                  ],
+                  label: 'Population'
+                }],
+                labels: {{ labels|safe }}
+              },
+              options: {
+                responsive: true
+              }
+            };
+        
+            window.onload = function() {
+              var ctx = document.getElementById('pie-chart').getContext('2d');
+              window.myPie = new Chart(ctx, config);
+            };
+        
+          </script>
+        
+       
+<!-- 
+        <script>
+            var xValues = [100,200,300,400,500,600,700,800,900,1000];
+            
+            new Chart("myChart", {
+              type: "line",
+              data: {
+                labels: xValues,
+                datasets: [{ 
+                  data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+                  borderColor: "red",
+                  fill: false
+                }, { 
+                  data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+                  borderColor: "green",
+                  fill: false
+                },]
+              },
+              options: {
+                legend: {display: false}
+              }
+            });
+            </script> -->
+
+                
+        
+
+    
+
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+
+
+{% endblock %}

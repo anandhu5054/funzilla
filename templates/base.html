@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="meta description">
+
+    <title>Funzilla The world of Fantasy </title>
+
+    <!--=== Favicon ===-->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"/>
+
+    <!--== Google Fonts ==-->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,700"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i"/>
+
+    <!--=== Bootstrap CSS ===-->
+    <link href="{% static 'css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+    <!--=== Font-Awesome CSS ===-->
+    <link href="{% static 'css/vendor/font-awesome.css' %}" rel="stylesheet">
+    <!--=== Plugins CSS ===-->
+    <link href="{% static 'css/plugins.css' %}" rel="stylesheet">
+    <!--=== Main Style CSS ===-->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    <!-- Modernizer JS -->
+    <script src="{% static 'js/vendor/modernizr-2.8.3.min.js' %}"></script>
+
+    <!-- Paypal Script -->
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AS69_Vz6HknqbSOzt_XSj5HqR2TUJ_W14cz83msbzvZoO_WhR7GD6seNBOqDaGvmoRiomz5J5jZj3GKe&currency=USD"></script>
+
+
+    
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+{% include 'includes/navbar.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% include 'includes/footer.html' %}
+
+    
+<!--=======================Javascript============================-->
+<!--=== Jquery Min Js ===-->
+<script src="{% static 'js/vendor/jquery-3.3.1.min.js' %}"></script>
+<!--=== Jquery Migrate Min Js ===-->
+<script src="{% static 'js/vendor/jquery-migrate-1.4.1.min.js' %}"></script>
+<!--=== Popper Min Js ===-->
+<script src="{% static 'js/vendor/popper.min.js' %}"></script>
+<!--=== Bootstrap Min Js ===-->
+<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+<!--=== Plugins Min Js ===-->
+<script src="{% static 'js/plugins.js' %}"></script>
+
+<!--=== Active Js ===-->
+<!-- <script src="{% static 'js/custom.js' %}"></script> -->
+
+<script src="{% static 'js/active.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    
+    {% if messages %}
+      {% for message in messages %}
+      swal("{{message}}");
+      
+     {% endfor %}
+    {% endif %}
+  
+</script>
+</body>
+
+</html>

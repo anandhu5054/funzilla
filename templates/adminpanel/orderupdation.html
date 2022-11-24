@@ -1,0 +1,137 @@
+{% extends 'adminpanel/adminbaser.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <h3 class="text-primary">Funzilla</h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">Admin</h6>
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a href="{% url 'adminhome' %}" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>                
+                <a href="{% url 'usersmanagement' %}" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Users</a>
+                <a href="{% url 'productmanagement' %}" class="nav-item nav-link"><i class="fa fa-warehouse me-2"></i>Products</a>
+                <a href="{% url 'categories' %}" class="nav-item nav-link"><i class="fa fa-object-group me-2"></i>categories</a>
+                <a href="{% url 'ordermanagement' %}" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Orders</a>
+                <a href="{% url 'coupon_offer' %}" class="nav-item nav-link"><i class="fa fa-gift me-2"></i>Coupons & Offers</a>                 
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+           
+            <div class="navbar-nav align-items-center ms-auto">
+            
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <span class="d-none d-lg-inline-flex">Admin</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="{% url 'adminlogout' %}" class="dropdown-item">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+
+
+        <!-- Users Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="col-12">
+                <div class="bg-light rounded h-100 p-4">
+                    <h4 class="mb-4">ORDER STATUS UPDATION </h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                    
+                            <tbody>
+                                <tr>
+                                    <td>Order Date</td>
+                                    <td>{{oredered_product.created_at}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Order ID</td>
+                                    <td>{{oredered_product.order.order_number}}</td>
+                                </tr>
+                                <tr>
+                                    <td> Customer Name</td>
+                                    <td>{{oredered_product.order.address.full_name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>
+                                        {{oredered_product.order.address.full_address}}, <br>
+                                        {{oredered_product.order.address.city}} ,
+                                        {{oredered_product.order.address.state}},<br>
+                                        {{oredered_product.order.address.country}},
+                                        {{oredered_product.order.address.postcode}},<br>
+                                        {{oredered_product.order.address.phone}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Method</td>
+                                    <td>{{oredered_product.payment.payment_method}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Amount</td>
+                                    <td>{{price}}</td>
+                                </tr>
+                                <tr> <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <td>Status</td>
+                                    <td>{{orderstatusUpdationForm.status}}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><button type="submit" class="btn btn-outline-info ">Update</button></td>
+                                </tr>
+                                </form>    
+
+                                    <!-- <td>
+                                        
+                                    </td> -->
+
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Users End -->
+
+
+{% endblock %}

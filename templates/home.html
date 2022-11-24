@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load product_tags %}
+
+{% block content %}
+
+
+<!--== Banner // Slider Area Start ==-->
+<section style="background-color: #FFE6F7;" id="banner-area" class="banner__2">
+    <div class="ruby-container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="banner-carousel" class="owl-carousel">
+                    <!-- Banner Single Carousel Start -->
+                    <div class="single-carousel-wrap slide-item-1">
+                        <div class="banner-caption text-center text-lg-left">
+                            <h2 style=" visibility: hidden;"> sd</h2>
+                            <h3 style="color: #FAF7F0;">#FUNZILLA</h3>
+                            <p  style="color: #FAF7F0;">The world of fantasy for your kids. </p>
+                            <a  style="color: #FAF7F0;" href="{% url 'store'%}" class="btn-long-arrow">Shop Now</a>
+                        </div>
+                    </div>
+                    <!-- Banner Single Carousel End -->
+
+                    
+
+                    <!-- Banner Single Carousel Start -->
+                    <div class="single-carousel-wrap slide-item-3">
+                        <div class="banner-caption text-center text-lg-left">
+                            <h2 style=" visibility: hidden;"> sd</h2>
+                            <h3 >#FUNZILLA</h3>
+                            <p>We bring you toys for you to fall in love with. </p>
+                            
+                            
+                            <a href="{% url 'store'%}" class="btn-long-arrow">Shop Now</a>
+                        </div>
+                    </div>
+                    <!-- Banner Single Carousel End -->
+
+                    <!-- Banner Single Carousel Start -->
+                    <div class="single-carousel-wrap slide-item-2">
+                        <div class="banner-caption text-center text-lg-left">
+                            <h3 style=" visibility: hidden;"> sd</h3>
+                            <h2  style="color: #EF4F4F;">#FUNZILLA</h2>
+                            <p  style="color: #EF4F4F;visibility: hidden;">Let your children have the best time.</p>
+                            <a  style="color: #184D47;visibility: hidden;" href="#" class="btn-long-arrow">Shop Now</a>
+                            
+                        </div>
+                    </div>
+                    <!-- Banner Single Carousel End -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== Banner Slider End ==-->
+
+
+<!--== New Collection Area Start ==-->
+<section id="new-collection-area" class="p-9">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <!-- Section Title Start -->
+                <div class="section-title">
+                    <h2>New Collection Products</h2>
+                    <p>Best products on sale.</p>
+                </div>
+                <!-- Section Title End -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="new-collection-tabs">
+
+                    <!-- Tab Menu Area Start -->
+                    <ul class="nav tab-menu-wrap" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="active" id="feature-products-tab" data-toggle="tab" href="#feature-products"
+                               role="tab" aria-controls="feature-products-tab" aria-selected="true">Feature Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="new-products-tab" data-toggle="tab" href="#new-products" role="tab"
+                               aria-controls="new-products" aria-selected="false">New Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="onsale-tab" data-toggle="tab" href="#onsale" role="tab" aria-controls="onsale"
+                               aria-selected="false">Onsale</a>
+                        </li>
+                    </ul>
+                    <!-- Tab Menu Area End -->
+
+                    <!-- Tab Content Area Start -->
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="feature-products" role="tabpanel"
+                             aria-labelledby="feature-products-tab">
+                            <div class="products-wrapper">
+                                <div class="products-carousel owl-carousel">
+                                    <!-- Single Product Item  feature-products -->
+
+                                    {% for item in featured_products %}
+                                    <div class="single-product-item text-center">
+                                        
+                                        <figure class="product-thumb">
+                                            <a href="{{item.get_url}}"><img src="{{item.images.url}}"
+                                                                               alt="Products" class="img-fluid"></a>
+                                        </figure>
+                             
+                                        <div class="product-details">
+                                            <h2><a href="{{item.get_url}}">{{item.product_name}}</a></h2>
+                                            <div class="rating">
+                                                <span>
+                                                    <i class="fa fa-star{% if item.averageReview < 0.5 %}-o{% elif item.averageReview >= 0.5 and item.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 1.5 %}-o{% elif item.averageReview >= 1.5 and item.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 2.5 %}-o{% elif item.averageReview >= 2.5 and item.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 3.5 %}-o{% elif item.averageReview >= 3.5 and item.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 4.5 %}-o{% elif item.averageReview >= 4.5 and item.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            {% if item.discount > 0 %}
+                                            <span class="price">₹{% call_sellerprice item.price item.discount %} &nbsp; <del>₹{{item.price}}</del></span> 
+                                            {% else %}
+                                            <span class="price">₹{{item.price}}</span> 
+                                            {% endif %}
+                                            <p class="products-desc">{{item.description1}}</p>
+                                            
+                                            {% if item.stock > 0 %}
+                                            <a href="{% url 'add_cart' item.id%}" class="btn btn-add-to-cart">+ Add to Cart</a>
+                                            {% else %}
+                                            <a style="pointer-events: none;" href="{% url 'add_cart' item.id%}" class="btn btn-add-to-cart">Out of Stock</a>
+                                            {% endif %}
+                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+Wishlist</a>
+                                            <!-- <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
+                                                Compare</a> -->
+                                        </div>
+
+                                        <div class="product-meta">
+                                            
+
+                                            <button class="wishlisttt" value="{{item.id}}" data-toggle="tooltip" data-placement="left" title="Add to Wishlist">
+                                            <i class="fa fa-heart-o"></i>
+
+                                            </button>
+                                            
+                                        </div>
+                                        {% if item.discount > 0 %}
+                                        <span class="product-bedge sale" style="transform: rotate(0deg);margin-left: -10px;margin-top: -20px;    padding: 5px 15px;">{{item.discount}} %  OFF</span>
+                                        {% endif %}
+                                        
+                                    </div>
+                                    {% endfor %}
+                                    <!-- Single Product Item  feature-products END -->
+                                    
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="new-products" role="tabpanel" aria-labelledby="new-products-tab">
+                            <div class="products-wrapper">
+                                <div class="products-carousel owl-carousel">
+                                    <!-- Single Product Item new-products -->
+
+                                    {% for item in new_products %}
+                                    <div class="single-product-item text-center">
+                                        
+                                        <figure class="product-thumb">
+                                            <a href="{{item.get_url}}"><img src="{{item.images.url}}"
+                                                                               alt="Products" class="img-fluid"></a>
+                                        </figure>
+                             
+                                        <div class="product-details">
+                                            <h2><a href="{{item.get_url}}">{{item.product_name}}</a></h2>
+                                            <div class="rating">
+                                                <span>
+                                                    <i class="fa fa-star{% if item.averageReview < 0.5 %}-o{% elif item.averageReview >= 0.5 and item.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 1.5 %}-o{% elif item.averageReview >= 1.5 and item.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 2.5 %}-o{% elif item.averageReview >= 2.5 and item.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 3.5 %}-o{% elif item.averageReview >= 3.5 and item.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 4.5 %}-o{% elif item.averageReview >= 4.5 and item.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            {% if item.discount > 0 %}
+                                            <span class="price">₹{% call_sellerprice item.price item.discount %} &nbsp; <del>₹{{item.price}}</del></span> 
+                                            {% else %}
+                                            <span class="price">₹{{item.price}}</span> 
+                                            {% endif %}
+                                            <p class="products-desc">{{item.description1}}</p>
+                                            {% if item.stock > 0 %}
+                                            <a href="{% url 'add_cart' item.id%}" class="btn btn-add-to-cart">+ Add to Cart</a>
+                                            {% else %}
+                                            <a style="pointer-events: none;" href="{% url 'add_cart' item.id%}" class="btn btn-add-to-cart">Out of Stock</a>
+                                            {% endif %}
+                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
+                                                Wishlist</a>
+                                            <!-- <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
+                                                Compare</a> -->
+                                        </div>
+
+                                        <div class="product-meta">
+                                            
+
+                                            <button class="wishlisttt" value="{{item.id}}" data-toggle="tooltip" data-placement="left" title="Add to Wishlist">
+                                            <i class="fa fa-heart-o"></i>
+
+                                            </button>
+                                            
+                                        </div>
+                                        {% if item.discount > 0 %}
+                                        <span class="product-bedge sale" style="transform: rotate(0deg);margin-left: -10px;margin-top: -20px;    padding: 5px 15px;">{{item.discount}} %  OFF</span>
+                                        {% endif %}
+                                        
+                                    </div>
+                                    {% endfor %}
+                                    <!-- Single Product Item  new-products END -->
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="onsale" role="tabpanel" aria-labelledby="onsale-tab">
+                            <div class="products-wrapper">
+                                <div class="products-carousel owl-carousel">
+                                    <!-- Single Product Item  onsale-->
+
+                                    {% for item in sale_products%}
+                                    <div class="single-product-item text-center">
+                                        
+                                        <figure class="product-thumb">
+                                            <a href="{{item.get_url}}"><img src="{{item.images.url}}"
+                                                                               alt="Products" class="img-fluid"></a>
+                                        </figure>
+                             
+                                        <div class="product-details">
+                                            <h2><a href="{{item.get_url}}">{{item.product_name}}</a></h2>
+                                            <div class="rating">
+                                                <span>
+                                                    <i class="fa fa-star{% if item.averageReview < 0.5 %}-o{% elif item.averageReview >= 0.5 and item.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 1.5 %}-o{% elif item.averageReview >= 1.5 and item.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 2.5 %}-o{% elif item.averageReview >= 2.5 and item.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 3.5 %}-o{% elif item.averageReview >= 3.5 and item.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if item.averageReview < 4.5 %}-o{% elif item.averageReview >= 4.5 and item.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            {% if item.discount > 0 %}
+                                            <span class="price">₹{% call_sellerprice item.price item.discount %} &nbsp; <del>₹{{item.price}}</del></span> 
+                                            {% else %}
+                                            <span class="price">₹{{item.price}}</span> 
+                                            {% endif %}
+                                            <p class="products-desc">{{item.description1}}</p>
+
+                                            {% if item.stock > 0 %}
+                                            <a href="{% url 'add_cart' item.id%}" class="btn btn-add-to-cart">+ Add to Cart</a>
+                                            {% else %}
+                                            <a style="pointer-events: none;" href="{% url 'add_cart' item.id%}" class="btn btn-add-to-cart">Out of Stock</a>
+                                            {% endif %}
+
+                                           
+                                            <!-- <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
+                                                Compare</a> -->
+                                        </div>
+
+                                        <div class="product-meta">
+                                            
+
+                                            <button class="wishlisttt" value="{{item.id}}" data-toggle="tooltip" data-placement="left" title="Add to Wishlist">
+                                            <i class="fa fa-heart-o"></i>
+
+                                            </button>
+                                            
+                                        </div>
+                                        {% if item.discount > 0 %}
+                                        <span class="product-bedge sale" style="transform: rotate(0deg);margin-left: -10px;margin-top: -20px;    padding: 5px 15px;">{{item.discount}} %  OFF</span>
+                                        {% endif %}
+                                        
+                                    </div>
+                                    {% endfor %}
+                                    <!-- Single Product Item onsale End -->
+
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab Content Area End -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== New Collection Area End ==-->
+
+<!-- ################################################################################################# -->
+
+
+
+
+<!-- ################################################################################################# -->
+
+
+
+
+
+<!--== Featured Products Area Start ==-->
+<div id="category-feature-product" class="pt-9">
+    <div class="ruby-container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="single-featured-product">
+                            <a href="{% url 'store'%}"><img src="{% static 'img/home_6_cat_1.jpg' %}" alt="Products" class="img-fluid"/></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="single-featured-product">
+                            <a href="{% url 'store'%}"><img src="{% static 'img/home_6_cat_2.jpg' %}" alt="Products" class="img-fluid"/></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="single-featured-product">
+                            <a href="{% url 'store'%}"><img src="{% static 'img/home_6_cat_3.jpg' %}" alt="Products" class="img-fluid"/></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="single-featured-product">
+                            <a href="{% url 'store'%}"><img src="{% static 'img/home_6_cat_4.jpg' %}" alt="Products" class="img-fluid"/></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Featured Products Area End ==-->
+
+
+
+
+<!-- Scroll to Top Start -->
+<a href="#" class="scrolltotop"><i class="fa fa-angle-up"></i></a>
+<!-- Scroll to Top End -->
+
+
+<script>
+  
+
+    [...document.getElementsByClassName('wishlisttt')].forEach(function (e){
+        e.addEventListener('click', function(){
+            id = Number(this.getAttribute('value'))
+            
+            
+            console.log(id)
+            $.ajax({
+                
+                url:'/cart/add_remove_wishlistItem',
+                method:'GET',
+                dataType: 'json',
+                data: {
+                    id:id
+                },
+                success:(response) => {
+                    if (response.flag == 1){
+                        swal("Removed from wishlist!", "", "error");
+                    }
+                    else if(response.flag == 2){
+                        swal("Added to wishlist!", "", "success");
+                    }
+                }
+            })
+        })
+    })
+</script>
+
+
+{% endblock %}
