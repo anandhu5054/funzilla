@@ -25,6 +25,7 @@
 </div>
 <!--== Page Title Area End ==-->
 
+{% if products %}
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
     <div class="container">
@@ -136,6 +137,31 @@
     </div>
 </div>
 <!--== Page Content Wrapper End ==-->
+{% else %}
+
+<div id="page-content-wrapper" class="p-9">
+    <div class="container">
+        <div class="row">        
+
+            <!-- Shop Page Content Start -->
+            <div class="col-lg-12">
+                <div class="shop-page-content-wrap">                  
+
+                    <div class="shop-page-products-wrap">
+                        <div class="products-wrapper">
+                            <h1>Sorry to say No Products, We will add soon</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+
+{% endif %}
+
 
 
 

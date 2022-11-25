@@ -91,7 +91,7 @@
                                         <tbody>
                                         {% for cart_item in cart_items%}
                                             <tr>
-                                                <td><a href="single-product.html">{{cart_item.product.product_name}}<strong> × {{cart_item.quantity}}</strong></a>
+                                                <td><a style="pointer-events: none;" href="single-product.html">{{cart_item.product.product_name}}<strong> × {{cart_item.quantity}}</strong></a>
                                                     <span>
                                                         <p class="text-muted small">
                                                             {% if cart_item.variations.all %}
