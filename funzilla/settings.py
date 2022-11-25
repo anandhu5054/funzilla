@@ -154,3 +154,5 @@ RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET')
 
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
+CSRF_TRUSTED_ORIGINS = ['https://funzilla.live']
