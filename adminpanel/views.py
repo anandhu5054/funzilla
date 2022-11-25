@@ -176,7 +176,7 @@ def add_product(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @unauthenticated_user
 def ordermanagement(request):
-    ordered_products = OrderProduct.objects.filter(ordered=True).order_by('-created_at')
+    ordered_products = OrderProduct.objects.filter(ordered=True).order_by('-updated_at')
     context = {
         'ordered_products' : ordered_products
     }

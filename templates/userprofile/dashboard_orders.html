@@ -88,7 +88,7 @@
                                                     <td>{{ordered_product.status}}</td>
 
                                                     {% if ordered_product.status == "Delivered" %}
-                                                    <td><a href="{% url 'cancel_order' ordered_product.id %}" class="btn btn-add-to-cart">Return Product</a></td>
+                                                    <td><a href="{% url 'return_product' ordered_product.id %}" class="btn btn-add-to-cart">Return Product</a></td>
 
                                                     {% elif ordered_product.status == "Cancelled" %}
                                                     <td><a href="" class="btn disabled btn-add-to-cart">Cancelled</a></td>
@@ -97,7 +97,7 @@
                                                     <td><a href="" class="btn disabled btn-add-to-cart">Return Initiated</a></td>
 
                                                     {% elif ordered_product.status == "Returned" %}
-                                                    <td><a href="{% url 'return_product' ordered_product.id %}" class="btn disabled btn-add-to-cart">Returned</a></td>
+                                                    <td><a href="" class="btn disabled btn-add-to-cart">Returned</a></td>
 
                                                     {% else %}
                                                     <td><a href="{% url 'cancel_order' ordered_product.id %}#id{{ordered_product.id}}" class="btn btn-add-to-cart">Cancel Order</a></td>
