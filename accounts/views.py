@@ -70,6 +70,7 @@ def register(request):
             email = form.cleaned_data['email']
             username = email.split("@")[0]
             password = form.cleaned_data['password']
+            phone_number = '+91'+phone_number
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password,phone_number=phone_number)
             user.profile_picture = 'default/default-user.png'
             user.save()
